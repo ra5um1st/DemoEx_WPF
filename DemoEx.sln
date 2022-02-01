@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoEx.WPF", "DemoEx\DemoEx.WPF.csproj", "{A6ACF443-EDAD-43CA-B6AA-55B3389B6EB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoEx.Domain", "DemoEx.Domain\DemoEx.Domain.csproj", "{A6DFC63F-87ED-44B5-AB51-DE48A1C66008}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6ACF443-EDAD-43CA-B6AA-55B3389B6EB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6ACF443-EDAD-43CA-B6AA-55B3389B6EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6ACF443-EDAD-43CA-B6AA-55B3389B6EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6ACF443-EDAD-43CA-B6AA-55B3389B6EB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6DFC63F-87ED-44B5-AB51-DE48A1C66008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6DFC63F-87ED-44B5-AB51-DE48A1C66008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6DFC63F-87ED-44B5-AB51-DE48A1C66008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6DFC63F-87ED-44B5-AB51-DE48A1C66008}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6255B76A-2C17-4D44-89AD-CB62AAFAEA4D}
+	EndGlobalSection
+EndGlobal
