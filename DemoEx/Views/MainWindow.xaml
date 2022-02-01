@@ -3,10 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DemoEx"
+        xmlns:local="clr-namespace:DemoEx" 
+        xmlns:viewmodels="clr-namespace:DemoEx.WPF.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Height="450" 
+        Width="800"
+        Title="{Binding Title}">
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Создать" Command="{Binding CreateServiceCommand}"/>
+            <Button Content="Редактировать" Command="{Binding UpdateServiceCommand}"/>
+        </StackPanel>
+        <TextBox Grid.Row="1"/>
     </Grid>
 </Window>

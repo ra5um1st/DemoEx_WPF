@@ -18,8 +18,4 @@
     <ProjectReference Include="..\DemoEx.Domain\DemoEx.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Новая папка\" />
-  </ItemGroup>
-
 </Project>

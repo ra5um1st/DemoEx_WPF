@@ -1,5 +1,6 @@
 ﻿using DemoEx.Domain.Models;
 using DemoEx.Domain.Repositories;
+using DemoEx.WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -40,11 +41,19 @@ namespace DemoEx
         }
         protected override void OnStartup(StartupEventArgs e)
         {
+            host.StartAsync();
+
             var mainWindow = host.Services.GetRequiredService<MainWindow>();
             mainWindow.DataContext = host.Services.GetRequiredService<MainViewModel>();
             mainWindow.Show();
 
             base.OnStartup(e);
+        }
+        protected override void OnExit(ExitEventArgs e)
+        {
+            host.StopAsync();
+            host.Dispose();
+            base.OnExit(e);
         }
     }
 }
