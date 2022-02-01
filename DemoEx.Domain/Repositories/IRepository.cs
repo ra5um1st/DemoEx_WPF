@@ -10,9 +10,9 @@ namespace DemoEx.Domain.Repositories
     public interface IRepository<T> where T: class, IEntity
     {
         public IQueryable<T> Items { get; }
-        public Task<T> Get(int id);
-        public Task<T> Add(T item);
-        public void Delete(int id);
-        public void Update(T item);
+        public Task<T> GetAsync(int id);
+        public Task<T> AddAsync(T item);
+        public Task DeleteAsync(int id);
+        public Task UpdateAsync(T item);
     }
 }
