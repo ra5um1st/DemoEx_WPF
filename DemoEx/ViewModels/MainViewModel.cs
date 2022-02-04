@@ -10,19 +10,12 @@ namespace DemoEx.WPF.ViewModels
 {
     class MainViewModel : ViewModel
     {
-        public MainViewModel() 
+        public MainViewModel()
         {
-            CreateServiceCommand = new LambdaCommand(CreateServiceCommandExecute);
+            currentViewModel = App.Host.Services.GetRequiredService<ServicePageViewModel>();
         }
 
         #region Commands
-        public LambdaCommand CreateServiceCommand { get; set; }
-        private void CreateServiceCommandExecute(object obj)
-        {
-            AddServiceWindow addServiceWindow = new AddServiceWindow();
-            addServiceWindow.Owner = App.Host.Services.GetRequiredService<MainWindow>();
-            addServiceWindow.ShowDialog();
-        }
         #endregion
 
         #region Properties
@@ -39,7 +32,6 @@ namespace DemoEx.WPF.ViewModels
             get => currentViewModel;
             set => Set(ref currentViewModel, ref value);
         }
+        #endregion
     }
-    #endregion
-
 }

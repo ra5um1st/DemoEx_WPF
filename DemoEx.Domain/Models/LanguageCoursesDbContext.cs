@@ -18,7 +18,7 @@ namespace DemoEx.Domain.Models
         }
 
         public virtual DbSet<Gender> Genders { get; set; }
-        public virtual DbSet<LaguageService> LaguageServices { get; set; }
+        public virtual DbSet<LanguageService> LaguageServices { get; set; }
         public virtual DbSet<Person> Persons { get; set; }
         public virtual DbSet<ServiceRecord> ServiceRecords { get; set; }
 
@@ -41,7 +41,7 @@ namespace DemoEx.Domain.Models
                     .HasColumnName("Gender");
             });
 
-            modelBuilder.Entity<LaguageService>(entity =>
+            modelBuilder.Entity<LanguageService>(entity =>
             {
                 entity.Property(e => e.Cost).HasColumnType("money");
 

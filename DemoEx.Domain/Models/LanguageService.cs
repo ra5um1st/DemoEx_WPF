@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace DemoEx.Domain.Models
 {
-    public partial class LaguageService : IEntity
+    public partial class LanguageService : IEntity
     {
-        public LaguageService()
+        public LanguageService()
         {
             ServiceRecords = new HashSet<ServiceRecord>();
         }
@@ -18,7 +18,6 @@ namespace DemoEx.Domain.Models
         public int? Duration { get; set; }
         public decimal? Cost { get; set; }
         public int? Discount { get; set; }
-
         public virtual ICollection<ServiceRecord> ServiceRecords { get; set; }
     }
 }

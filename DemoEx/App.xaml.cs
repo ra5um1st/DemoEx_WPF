@@ -29,13 +29,14 @@ namespace DemoEx
                 services.AddSingleton<MainWindow>();
 
                 services.AddTransient<MainViewModel>();
+                services.AddTransient<ServicePageViewModel>();
+                services.AddTransient<AddServiceViewModel>();
+                services.AddTransient<UpdateServiceViewModel>();
 
+                services.AddTransient<IRepository<LanguageService>, Repository<LanguageService>>();
                 services.AddTransient<IRepository<Gender>, Repository<Gender>>();
-                services.AddTransient<IRepository<Gender>, Repository<Gender>>();
-                services.AddTransient<IRepository<Gender>, Repository<Gender>>();
-                services.AddTransient<IRepository<Gender>, Repository<Gender>>();
-                services.AddTransient<IRepository<Gender>, Repository<Gender>>();
-
+                services.AddTransient<IRepository<Person>, Repository<Person>>();
+                services.AddTransient<IRepository<ServiceRecord>, Repository<ServiceRecord>>();
             })
             .Build();
         }

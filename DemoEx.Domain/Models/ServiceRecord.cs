@@ -13,6 +13,6 @@ namespace DemoEx.Domain.Models
         public DateTime? StartDate { get; set; }
 
         public virtual Person Person { get; set; }
-        public virtual LaguageService Service { get; set; }
+        public virtual LanguageService Service { get; set; }
     }
 }

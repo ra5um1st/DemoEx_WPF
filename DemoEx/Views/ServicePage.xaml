@@ -3,10 +3,121 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DemoEx.WPF.Views"
+             xmlns:local="clr-namespace:DemoEx.WPF.Views" 
+             xmlns:converters="clr-namespace:DemoEx.WPF.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" 
+             d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:DiscountToBooleanConverter x:Key="DiscountToBooleanConverter"/>
+        <converters:DiscountCostConverter x:Key="DiscountCostConverter"/>
+        <DataTemplate x:Key="listTemplate">
+            <StackPanel Orientation="Horizontal" 
+                        Margin="0 2">
+                <Image 
+                    Source="{Binding ImagePath, FallbackValue='Изображение не найдено'}"
+                    Width="250"
+                    Margin="5"/>
+                <Grid Margin="10 2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding ServiceName, FallbackValue='Наименование услуги'}"
+                               TextWrapping="Wrap"
+                               MaxWidth="600"
+                               FontSize="24"
+                               Grid.Row="0"/>
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Row="1">
+                        <TextBlock Text="{Binding Cost, StringFormat='{}{0:F0} ', FallbackValue='-'}"
+                                   FontSize="16">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Discount, Converter={StaticResource DiscountToBooleanConverter}}"
+                                             Value="True">
+                                            <Setter Property="TextBlock.TextDecorations" Value="Strikethrough"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Discount, Converter={StaticResource DiscountToBooleanConverter}}"
+                                             Value="False">
+                                            <Setter Property="TextBlock.Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock FontSize="16">
+                            <TextBlock.Style>
+                                <Style>
+                                    <Setter Property="TextBlock.Text">
+                                        <Setter.Value>
+                                            <MultiBinding StringFormat="{}{0:F0} рублей за " FallbackValue="-" Converter="{StaticResource DiscountCostConverter}">
+                                                <Binding Path="Cost"/>
+                                                <Binding Path="Discount"/>
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Text="{Binding Duration, StringFormat='{}{0} минут', FallbackValue='-'}"
+                                   FontSize="16"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Discount, StringFormat=* скидка {0}%}"
+                               Grid.Row="2">
+                        <TextBlock.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Discount, Converter={StaticResource DiscountToBooleanConverter}}"
+                                                 Value="False">
+                                        <Setter Property="TextBlock.Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Row="4"
+                                Margin="0 25 0 10">
+                        <Button 
+                            Content="Редактировать"
+                            Margin="0 0 10 0"
+                            Padding="25 5"/>
+                        <Button 
+                            Content="Удалить"
+                            Padding="25 5"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    
     <Grid Background="White">
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ListBox ItemsSource="{Binding LanguageServices}" 
+                     ItemTemplate="{StaticResource listTemplate}">
+            </ListBox>
+        </ScrollViewer>
+        
+        <Button Content="Создать"
+                Command="{Binding CreateServiceCommand}"
+                Grid.Row="1"
+                Height="50"
+                Width="50">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="50"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </UserControl>

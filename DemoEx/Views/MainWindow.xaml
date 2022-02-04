@@ -4,24 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoEx" 
-        xmlns:viewmodels="clr-namespace:DemoEx.WPF.ViewModels"
+        xmlns:viewmodels="clr-namespace:DemoEx.WPF.ViewModels" 
+        xmlns:views="clr-namespace:DemoEx.WPF.Views"
         mc:Ignorable="d"
         Height="450" 
         Width="800"
         Title="{Binding Title}">
-    <Window.DataContext>
-        <viewmodels:MainViewModel/>
-    </Window.DataContext>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <Button Content="Создать" Command="{Binding CreateServiceCommand}"/>
-            <Button Content="Редактировать" Command="{Binding UpdateServiceCommand}"/>
-        </StackPanel>
-        <TextBox Grid.Row="1"/>
+        <TabControl>
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding CurrentViewModel}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.Resources>
+                <DataTemplate DataType="{x:Type viewmodels:ServicePageViewModel}">
+                    <views:ServicePage/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:ServiceRecordsViewModel}">
+                    <views:ServicePage/>
+                </DataTemplate>
+            </TabControl.Resources>
+            
+            <TabItem Header="Список услуг" Content="{Binding CurrentViewModel}"/>
+            <TabItem Header="Ближайшие записи" Content="{Binding CurrentViewModel}"/>
+        </TabControl>
     </Grid>
 </Window>
