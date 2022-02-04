@@ -25,10 +25,17 @@ namespace DemoEx.WPF.ViewModels
 
             CreateServiceCommand = new LambdaCommand(CreateServiceCommandExecute);
         }
+
         private readonly IRepository<LanguageService> languageServicesRepository;
+
+        #region Properties
         private IEnumerable<LanguageService> languageServices;
         public IEnumerable<LanguageService> LanguageServices => languageServices;
+        #endregion
+
+        #region Commands
         public LambdaCommand CreateServiceCommand { get; set; }
+        #endregion
         private void CreateServiceCommandExecute(object obj)
         {
             AddServiceWindow addServiceWindow = new AddServiceWindow();

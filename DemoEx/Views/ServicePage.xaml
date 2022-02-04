@@ -5,12 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DemoEx.WPF.Views" 
              xmlns:converters="clr-namespace:DemoEx.WPF.Converters"
+             xmlns:icons="http://schemas.fontawesome.com/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="800">
     <UserControl.Resources>
+        
         <converters:DiscountToBooleanConverter x:Key="DiscountToBooleanConverter"/>
         <converters:DiscountCostConverter x:Key="DiscountCostConverter"/>
+        
         <DataTemplate x:Key="listTemplate">
             <StackPanel Orientation="Horizontal" 
                         Margin="0 2">
@@ -97,27 +100,95 @@
     </UserControl.Resources>
     
     <Grid Background="White">
+        
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        
+        <StackPanel Orientation="Horizontal">
+            <Border BorderThickness="1"
+                    BorderBrush="Gray"
+                    Margin="2">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Создать" 
+                            ToolTip="Создать новую услугу"
+                            Padding="5"
+                            Margin="5"/>
+                </StackPanel>
+            </Border>
+            <Border BorderThickness="1"
+                    BorderBrush="Gray"
+                    Margin="2">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Скидка" 
+                               VerticalAlignment="Center"
+                               Padding="5"/>
+                    <ComboBox SelectedIndex="0"
+                              Padding="5"
+                              Margin="5">
+                        <ComboBoxItem Content="Любая"/>
+                        <ComboBoxItem Content="0% - 5%"/>
+                        <ComboBoxItem Content="5% - 15%"/>
+                        <ComboBoxItem Content="15% - 30%"/>
+                        <ComboBoxItem Content="30% - 70%"/>
+                        <ComboBoxItem Content="70% - 100%"/>
+                    </ComboBox>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Сортировка"
+                                   VerticalAlignment="Center"
+                                   Padding="5"/>
+                        <ComboBox SelectedIndex="0"
+                                  Padding="5"
+                                  Margin="5">
+                            <ComboBoxItem Content="По возрастанию"/>
+                            <ComboBoxItem Content="По убыванию"/>
+                        </ComboBox>
+                        <ComboBox SelectedIndex="0"
+                                  Padding="5"
+                                  Margin="5">
+                            <ComboBoxItem Content="cтоимости"/>
+                            <ComboBoxItem Content="индексов"/>
+                        </ComboBox>
+                        <Grid Margin="5">
+                            <TextBlock Text="Поиск" 
+                                       Panel.ZIndex="1"
+                                       VerticalAlignment="Center"
+                                       Padding="3">
+                                <TextBlock.Style>
+                                    <Style>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=SearchBar}" Value="">
+                                                <Setter Property="TextBlock.Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBox Text="{Binding Seach}"
+                                     VerticalAlignment="Center"
+                                     Padding="0 5"
+                                     Width="200"
+                                     Name="SearchBar"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" 
+                      VerticalScrollBarVisibility="Auto"
+                      Grid.Row="1">
             <ListBox ItemsSource="{Binding LanguageServices}" 
                      ItemTemplate="{StaticResource listTemplate}">
             </ListBox>
         </ScrollViewer>
         
-        <Button Content="Создать"
-                Command="{Binding CreateServiceCommand}"
-                Grid.Row="1"
-                Height="50"
-                Width="50">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="50"/>
-                </Style>
-            </Button.Resources>
-        </Button>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="2">
+            <TextBlock Text="{Binding SelectedItemsCount, StringFormat='{}{0} из '}"/>
+            <TextBlock Text="{Binding TotalItemsCount}"/>
+        </StackPanel>
     </Grid>
 </UserControl>
