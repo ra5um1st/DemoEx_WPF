@@ -31,7 +31,7 @@ namespace DemoEx.Domain.Repositories
             await context.SaveChangesAsync();
             return item;
         }
-        public async Task DeleteAsync(int id)
+        public async Task RemoveAsync(int id)
         {
             context.Set<T>().Remove(new T { Id = id });
             await context.SaveChangesAsync();

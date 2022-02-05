@@ -12,7 +12,7 @@ namespace DemoEx.Domain.Repositories
         public IQueryable<T> Items { get; }
         public Task<T> GetAsync(int id);
         public Task<T> AddAsync(T item);
-        public Task DeleteAsync(int id);
+        public Task RemoveAsync(int id);
         public Task UpdateAsync(T item);
     }
 }

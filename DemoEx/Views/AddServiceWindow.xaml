@@ -5,8 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoEx.WPF.Views"
         mc:Ignorable="d"
-        Title="AddServiceWindow" Height="450" Width="800">
+        Title="Добавление сервиса" Height="600" Width="400">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
         
+        <StackPanel>
+            <TextBlock Text="{Binding LanguageService.Id}"
+                       IsEnabled="False"/>
+            <TextBox Text="{Binding LanguageService.ServiceName}"/>
+            <StackPanel Orientation="Horizontal">
+                <Image Width="50"
+                       Source="{Binding LanguageService.SelectedImage}"/>
+                <Button Content="Добавить изображения"
+                        Command="{Binding LanguageService.AddImagesCommad}"/>
+            </StackPanel>
+            <DatePickerTextBox Text="{Binding LanguageService.Duration, StringFormat='{}{0:HH:MM:SS}'}"/>
+            <TextBox Text="{Binding LanguageService.Cost, StringFormat='{}{0:D}'}"/>
+            <TextBox Text="{Binding LanguageService.Discount, StringFormat='{}{0:P}'}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="25">
+            <Button Content="Добавить услугу"
+                    Command="{Binding AddCommand}"
+                    Margin="10 0"/>
+            <Button Content="Отмена"
+                    Command="{Binding CancelCommand}"
+                    Margin="10 0"/>
+        </StackPanel>
     </Grid>
 </Window>

@@ -142,7 +142,8 @@
                     <Button Content="Создать" 
                             ToolTip="Создать новую услугу"
                             Padding="5"
-                            Margin="5"/>
+                            Margin="5"
+                            Command="{Binding CreateServiceCommand}"/>
                 </StackPanel>
             </Border>
             
@@ -159,31 +160,28 @@
 
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Скидка" 
-                               VerticalAlignment="Center"
-                               Padding="5"/>
-                        <ComboBox SelectedIndex="0"
-                              Padding="5"
-                              Margin="5">
-                            <ComboBoxItem Content="Любая"/>
-                            <ComboBoxItem Content="0% - 5%"/>
-                            <ComboBoxItem Content="5% - 15%"/>
-                            <ComboBoxItem Content="15% - 30%"/>
-                            <ComboBoxItem Content="30% - 70%"/>
-                            <ComboBoxItem Content="70% - 100%"/>
-                        </ComboBox>
+                                   VerticalAlignment="Center"
+                                   Padding="5"/>
+                        <ComboBox Padding="5"
+                                  Margin="5"
+                                  ItemsSource="{Binding DiscountFilterDictionary}"
+                                  SelectedValuePath="Key"
+                                  DisplayMemberPath="Value"
+                                  SelectedValue="{Binding CurrentDiscountFilter, Mode=OneWayToSource}"
+                                  SelectedIndex="0"/>
                         <TextBlock Text="Сортировка"
                                    VerticalAlignment="Center"
                                    Padding="5"/>
                         <ComboBox Padding="5"
                                   Margin="5"
-                                  ItemsSource="{Binding SortingDirections}"
+                                  ItemsSource="{Binding SortingDirectionsDictionary}"
                                   SelectedValuePath="Key"
                                   DisplayMemberPath="Value"
                                   SelectedValue="{Binding CurrentSortingDirection, Mode=OneWayToSource}"
                                   SelectedIndex="0"/>
                         <ComboBox Padding="5"
                                   Margin="5"
-                                  ItemsSource="{Binding SortingProperties}"
+                                  ItemsSource="{Binding SortingPropertiesDictionary}"
                                   SelectedValuePath="Key"
                                   DisplayMemberPath="Value"
                                   SelectedValue="{Binding CurrentSortingProperty, Mode=OneWayToSource}"
@@ -235,6 +233,7 @@
 
         <ListBox x:Name="ListBox"
                  Grid.Row="1"
+                 SelectedItem="{Binding SelectedLanguageService, Mode=OneWayToSource}"
                  ItemsSource="{Binding LanguageServiceView}" 
                  ItemTemplate="{StaticResource listTemplate}"
                  ItemContainerStyle="{StaticResource DiscountItem}"

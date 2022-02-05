@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Data;
 
 namespace DemoEx.WPF.ViewModels
@@ -22,7 +23,7 @@ namespace DemoEx.WPF.ViewModels
         {
             searchFilter = "";
             currentSortingProperty = nameof(LanguageService.Id);
-            SortingProperties = new Dictionary<string, string>()
+            SortingPropertiesDictionary = new Dictionary<string, string>()
             {
                 { nameof(LanguageService.Id), "идентификатора" },
                 { nameof(LanguageService.ServiceName), "названия"},
@@ -30,10 +31,19 @@ namespace DemoEx.WPF.ViewModels
                 { nameof(LanguageService.Discount), "скидки"},
                 { nameof(LanguageService.Duration), "длительности"}
             };
-            SortingDirections = new Dictionary<ListSortDirection, string>()
+            SortingDirectionsDictionary = new Dictionary<ListSortDirection, string>()
             {
                 { ListSortDirection.Ascending, "По убыванию" },
                 { ListSortDirection.Descending, "По возрастанию" }
+            };
+            DiscountFilterDictionary = new Dictionary<(int, int), string>() 
+            {
+                { (0, 100), "Любая" },
+                { (0, 5), "0% - 5%" },
+                { (5, 15), "5% - 15%" },
+                { (15, 30), "15% - 30%" },
+                { (30, 70), "30% - 70%" },
+                { (70, 100), "70% - 100%" }
             };
 
             this.languageServicesRepository = languageServicesRepository;
@@ -50,19 +60,23 @@ namespace DemoEx.WPF.ViewModels
                 IsLiveFilteringRequested = true,
                 IsLiveGroupingRequested = true
             };
-            languageServiceSource.Filter += OnLanguageServiceFilter;
+            languageServiceSource.Filter += OnLanguageServiceNameFilter;
+            languageServiceSource.Filter += OnLanguageServiceDiscountFilter;
 
-            CreateServiceCommand = new LambdaCommand(CreateServiceCommandExecute);
+            CreateServiceCommand = new LambdaCommand(OnCreateServiceCommandExecute);
+            UpdateServiceCommand = new LambdaCommand(OnUpdateServiceCommandExecute, CanUpdateServiceCommandExecute);
+            RemoveServiceCommand = new LambdaCommand(OnRemoveServiceCommandExecute, CanRemoveServiceCommandExecute);
         }
 
         #region Fields
 
         private readonly IRepository<LanguageService> languageServicesRepository;
+
         private readonly CollectionViewSource languageServiceSource;
         #endregion
 
         #region Functions
-        private void OnLanguageServiceFilter(object sender, FilterEventArgs e)
+        private void OnLanguageServiceNameFilter(object sender, FilterEventArgs e)
         {
             if (e.Item == null || e.Item.GetType() != typeof(LanguageService))
             {
@@ -75,12 +89,47 @@ namespace DemoEx.WPF.ViewModels
                 e.Accepted = false;
             }
         }
+
+        private void OnLanguageServiceDiscountFilter(object sender, FilterEventArgs e)
+        {
+            if (e.Item == null || e.Item.GetType() != typeof(LanguageService))
+            {
+                return;
+            }
+
+            LanguageService service = (LanguageService)e.Item;
+            if (service.Discount < currentDiscountFilter.Item1 || service.Discount > currentDiscountFilter.Item2)
+            {
+                e.Accepted = false;
+            }
+        }
         #endregion
 
         #region Properties
 
-        public Dictionary<string, string> SortingProperties { get; }
-        public Dictionary<ListSortDirection, string> SortingDirections { get; }
+        private LanguageService selectedLanguageService;
+        public LanguageService SelectedLanguageService
+        {
+            get => selectedLanguageService;
+            set => Set(ref selectedLanguageService, ref value);
+        }
+
+        public Dictionary<(int, int), string> DiscountFilterDictionary { get; }
+
+        private (int, int) currentDiscountFilter;
+        public (int, int) CurrentDiscountFilter
+        {
+            get => currentDiscountFilter;
+            set
+            {
+                Set(ref currentDiscountFilter, ref value);
+                languageServiceSource.View.Refresh();
+            }
+        }
+
+        public Dictionary<string, string> SortingPropertiesDictionary { get; }
+        public Dictionary<ListSortDirection, string> SortingDirectionsDictionary { get; }
+
         private ListSortDirection currentSortingDirection;
         public ListSortDirection CurrentSortingDirection
         {
@@ -129,14 +178,60 @@ namespace DemoEx.WPF.ViewModels
 
         #region Commands
         public LambdaCommand CreateServiceCommand { get; set; }
-        private void CreateServiceCommandExecute(object obj)
+        private void OnCreateServiceCommandExecute(object obj)
         {
+            var serviceToAdd = new LanguageService();
+
             AddServiceWindow addServiceWindow = new AddServiceWindow()
             {
-                Owner = App.Host.Services.GetRequiredService<MainWindow>()
+                Owner = App.Host.Services.GetRequiredService<MainWindow>(),
+                DataContext = new AddServiceViewModel(serviceToAdd)
             };
-            addServiceWindow.ShowDialog();
+            if (addServiceWindow.ShowDialog() != null && addServiceWindow.ShowDialog() == true)
+            {
+                languageServicesRepository.AddAsync(serviceToAdd);
+            }
         }
+
+        public LambdaCommand UpdateServiceCommand { get; set; }
+        private void OnUpdateServiceCommandExecute(object obj)
+        {
+            if (!CanUpdateServiceCommandExecute(obj))
+            {
+                return;
+            }
+            
+            LanguageService service = (LanguageService)obj;
+            var serviceToUpdate = service ?? SelectedLanguageService;
+
+            AddServiceWindow addServiceWindow = new AddServiceWindow()
+            {
+                Owner = App.Host.Services.GetRequiredService<MainWindow>(),
+                DataContext = new AddServiceViewModel(serviceToUpdate)
+            };
+            if (addServiceWindow.ShowDialog() != null && addServiceWindow.ShowDialog() == true)
+            {
+                languageServicesRepository.UpdateAsync(serviceToUpdate);
+            }
+        }
+        private bool CanUpdateServiceCommandExecute(object obj) => obj != null || SelectedLanguageService != null;
+
+        public LambdaCommand RemoveServiceCommand { get; set; }
+        private void OnRemoveServiceCommandExecute(object obj)
+        {
+            if (!CanRemoveServiceCommandExecute(obj))
+            {
+                return;
+            }
+            LanguageService service = (LanguageService)obj;
+            var serviceToDelete = service ?? SelectedLanguageService;
+            var dialogResult = MessageBox.Show("Вы действительно хотите удалить данный элемент?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if(dialogResult == MessageBoxResult.Yes)
+            {
+                languageServicesRepository.RemoveAsync(serviceToDelete.Id);
+            }
+        }
+        private bool CanRemoveServiceCommandExecute(object obj) => obj != null || SelectedLanguageService != null;
         #endregion
     }
 }
