@@ -10,18 +10,41 @@
              d:DesignHeight="450" 
              d:DesignWidth="800">
     <UserControl.Resources>
-        
+
+        <converters:EmtyStringToBooleanConverter x:Key="EmtyStringToBooleanConverter"/>
         <converters:DiscountToBooleanConverter x:Key="DiscountToBooleanConverter"/>
         <converters:DiscountCostConverter x:Key="DiscountCostConverter"/>
+        <converters:IntNullToBooleanConverter x:Key="IntNullToBooleanConverter"/>
+
+        <Style x:Key="ListBox" TargetType="ListBox">
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
         
+        <Style x:Key="DiscountItem" TargetType="ListBoxItem">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Discount, Converter={StaticResource DiscountToBooleanConverter}}" Value="True">
+                    <Setter Property="Background" Value="#dcffcc"/>
+                </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="1 2"/>
+        </Style>
+
         <DataTemplate x:Key="listTemplate">
-            <StackPanel Orientation="Horizontal" 
-                        Margin="0 2">
+            <Grid Margin="0 2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
                 <Image 
                     Source="{Binding ImagePath, FallbackValue='Изображение не найдено'}"
                     Width="250"
                     Margin="5"/>
-                <Grid Margin="10 2">
+                <Grid Margin="10 2"
+                      Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
@@ -95,19 +118,23 @@
                             Padding="25 5"/>
                     </StackPanel>
                 </Grid>
-            </StackPanel>
+            </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    
+
     <Grid Background="White">
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        
-        <StackPanel Orientation="Horizontal">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
             <Border BorderThickness="1"
                     BorderBrush="Gray"
                     Margin="2">
@@ -118,76 +145,128 @@
                             Margin="5"/>
                 </StackPanel>
             </Border>
+            
             <Border BorderThickness="1"
                     BorderBrush="Gray"
-                    Margin="2">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Скидка" 
+                    Margin="2"
+                    Grid.Column="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Скидка" 
                                VerticalAlignment="Center"
                                Padding="5"/>
-                    <ComboBox SelectedIndex="0"
+                        <ComboBox SelectedIndex="0"
                               Padding="5"
                               Margin="5">
-                        <ComboBoxItem Content="Любая"/>
-                        <ComboBoxItem Content="0% - 5%"/>
-                        <ComboBoxItem Content="5% - 15%"/>
-                        <ComboBoxItem Content="15% - 30%"/>
-                        <ComboBoxItem Content="30% - 70%"/>
-                        <ComboBoxItem Content="70% - 100%"/>
-                    </ComboBox>
-                    <StackPanel Orientation="Horizontal">
+                            <ComboBoxItem Content="Любая"/>
+                            <ComboBoxItem Content="0% - 5%"/>
+                            <ComboBoxItem Content="5% - 15%"/>
+                            <ComboBoxItem Content="15% - 30%"/>
+                            <ComboBoxItem Content="30% - 70%"/>
+                            <ComboBoxItem Content="70% - 100%"/>
+                        </ComboBox>
                         <TextBlock Text="Сортировка"
                                    VerticalAlignment="Center"
                                    Padding="5"/>
-                        <ComboBox SelectedIndex="0"
-                                  Padding="5"
-                                  Margin="5">
-                            <ComboBoxItem Content="По возрастанию"/>
-                            <ComboBoxItem Content="По убыванию"/>
-                        </ComboBox>
-                        <ComboBox SelectedIndex="0"
-                                  Padding="5"
-                                  Margin="5">
-                            <ComboBoxItem Content="cтоимости"/>
-                            <ComboBoxItem Content="индексов"/>
-                        </ComboBox>
-                        <Grid Margin="5">
-                            <TextBlock Text="Поиск" 
-                                       Panel.ZIndex="1"
-                                       VerticalAlignment="Center"
-                                       Padding="3">
+                        <ComboBox Padding="5"
+                                  Margin="5"
+                                  ItemsSource="{Binding SortingDirections}"
+                                  SelectedValuePath="Key"
+                                  DisplayMemberPath="Value"
+                                  SelectedValue="{Binding CurrentSortingDirection, Mode=OneWayToSource}"
+                                  SelectedIndex="0"/>
+                        <ComboBox Padding="5"
+                                  Margin="5"
+                                  ItemsSource="{Binding SortingProperties}"
+                                  SelectedValuePath="Key"
+                                  DisplayMemberPath="Value"
+                                  SelectedValue="{Binding CurrentSortingProperty, Mode=OneWayToSource}"
+                                  SelectedIndex="0"/>
+                    </StackPanel>
+                    
+                    <Grid Margin="5" Grid.Column="2">
+                        <TextBox Text="{Binding SearchFilter, UpdateSourceTrigger=PropertyChanged}"
+                                 VerticalAlignment="Center"
+                                 Padding="0 5"
+                                 Width="200"
+                                 x:Name="SearchBar"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Поиск"
+                                       Padding="3 5"
+                                       IsHitTestVisible="False"
+                                       Foreground="DimGray">
                                 <TextBlock.Style>
-                                    <Style>
+                                    <Style TargetType="TextBlock">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=SearchBar}" Value="">
-                                                <Setter Property="TextBlock.Visibility" Value="Visible"/>
+                                            <DataTrigger Binding="{Binding Text, ElementName=SearchBar, Converter={StaticResource EmtyStringToBooleanConverter}}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBox Text="{Binding Seach}"
-                                     VerticalAlignment="Center"
-                                     Padding="0 5"
-                                     Width="200"
-                                     Name="SearchBar"/>
-                        </Grid>
-                    </StackPanel>
-                </StackPanel>
+                            <icons:FontAwesome Icon="Solid_Search" 
+                                               FontSize="16" 
+                                               Foreground="Gray"
+                                               VerticalAlignment="Center"
+                                               IsHitTestVisible="False">
+                                <icons:FontAwesome.Style>
+                                    <Style TargetType="icons:FontAwesome">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=SearchBar, Converter={StaticResource EmtyStringToBooleanConverter}}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </icons:FontAwesome.Style>
+                            </icons:FontAwesome>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
             </Border>
-        </StackPanel>
-        
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" 
-                      VerticalScrollBarVisibility="Auto"
-                      Grid.Row="1">
-            <ListBox ItemsSource="{Binding LanguageServices}" 
-                     ItemTemplate="{StaticResource listTemplate}">
-            </ListBox>
-        </ScrollViewer>
-        
+        </Grid>
+
+
+        <ListBox x:Name="ListBox"
+                 Grid.Row="1"
+                 ItemsSource="{Binding LanguageServiceView}" 
+                 ItemTemplate="{StaticResource listTemplate}"
+                 ItemContainerStyle="{StaticResource DiscountItem}"
+                 Style="{StaticResource ListBox}"
+                 VirtualizingPanel.IsVirtualizing="True"
+                 VirtualizingPanel.VirtualizationMode="Recycling"
+                 VirtualizingPanel.IsContainerVirtualizable="True">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+        <TextBlock Text="Улуги не найдены!"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="48"
+                   Grid.Row="1">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Items.Count, ElementName=ListBox, Converter={StaticResource IntNullToBooleanConverter}}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
         <StackPanel Orientation="Horizontal"
                     Grid.Row="2">
-            <TextBlock Text="{Binding SelectedItemsCount, StringFormat='{}{0} из '}"/>
+            <TextBlock Text="{Binding Items.Count, ElementName=ListBox, StringFormat='{}{0} из '}"/>
             <TextBlock Text="{Binding TotalItemsCount}"/>
         </StackPanel>
     </Grid>

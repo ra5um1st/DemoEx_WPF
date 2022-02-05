@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -18,6 +19,10 @@ namespace DemoEx.Domain.Models
         public int? Duration { get; set; }
         public decimal? Cost { get; set; }
         public int? Discount { get; set; }
+
+        [NotMapped]
+        public int DiscountCost { get; set; }
+
         public virtual ICollection<ServiceRecord> ServiceRecords { get; set; }
     }
 }
