@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DemoEx.Domain.Repositories
+namespace DemoEx.Domain.Repositories.Base
 {
-    public interface IRepository<T> where T: class, IEntity
+    public interface IRepository<T> where T : class, IEntity
     {
         public IQueryable<T> Items { get; }
         public Task<T> GetAsync(int id);

@@ -13,18 +13,25 @@
         </Grid.RowDefinitions>
         
         <StackPanel>
-            <TextBlock Text="{Binding LanguageService.Id}"
+            <TextBlock Text="{Binding Id, Mode=OneWayToSource}"
                        IsEnabled="False"/>
-            <TextBox Text="{Binding LanguageService.ServiceName}"/>
-            <StackPanel Orientation="Horizontal">
-                <Image Width="50"
-                       Source="{Binding LanguageService.SelectedImage}"/>
-                <Button Content="Добавить изображения"
-                        Command="{Binding LanguageService.AddImagesCommad}"/>
-            </StackPanel>
-            <DatePickerTextBox Text="{Binding LanguageService.Duration, StringFormat='{}{0:HH:MM:SS}'}"/>
-            <TextBox Text="{Binding LanguageService.Cost, StringFormat='{}{0:D}'}"/>
-            <TextBox Text="{Binding LanguageService.Discount, StringFormat='{}{0:P}'}"/>
+            <TextBox Text="{Binding ServiceName, Mode=OneWayToSource}"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Image Width="250"
+                       Margin="10"
+                       Source="{Binding ImagePath}"/>
+                <Button Grid.Row="1"
+                        Margin="15"
+                        Content="Добавить изображение"
+                        Command="{Binding AddImageCommand}"/>
+            </Grid>
+            <TextBox Text="{Binding Duration, StringFormat='{}{HH:mm}', Mode=OneWayToSource}"/>
+            <TextBox Text="{Binding Cost, StringFormat='{}{0:D}', Mode=OneWayToSource}"/>
+            <TextBox Text="{Binding Discount, StringFormat='{}{0:P}', Mode=OneWayToSource}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1"
@@ -32,7 +39,7 @@
                     HorizontalAlignment="Center"
                     Margin="25">
             <Button Content="Добавить услугу"
-                    Command="{Binding AddCommand}"
+                    Command="{Binding AcceptCommand}"
                     Margin="10 0"/>
             <Button Content="Отмена"
                     Command="{Binding CancelCommand}"

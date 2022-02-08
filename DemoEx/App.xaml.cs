@@ -1,5 +1,6 @@
 ﻿using DemoEx.Domain.Models;
 using DemoEx.Domain.Repositories;
+using DemoEx.Domain.Repositories.Base;
 using DemoEx.WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

@@ -1,6 +1,8 @@
 ﻿using DemoEx.Domain.Models;
 using DemoEx.Domain.Repositories;
+using DemoEx.Domain.Repositories.Base;
 using DemoEx.WPF.Commands;
+using DemoEx.WPF.Services;
 using DemoEx.WPF.ViewModels.Base;
 using DemoEx.WPF.Views;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +21,7 @@ namespace DemoEx.WPF.ViewModels
 {
     class ServicePageViewModel : ViewModel
     {
-        public ServicePageViewModel(IRepository<LanguageService> languageServicesRepository)
+        public ServicePageViewModel(IRepository<LanguageService> languageServiceRepository)
         {
             searchFilter = "";
             currentSortingProperty = nameof(LanguageService.Id);
@@ -33,8 +35,8 @@ namespace DemoEx.WPF.ViewModels
             };
             SortingDirectionsDictionary = new Dictionary<ListSortDirection, string>()
             {
-                { ListSortDirection.Ascending, "По убыванию" },
-                { ListSortDirection.Descending, "По возрастанию" }
+                { ListSortDirection.Descending, "По убыванию" },
+                { ListSortDirection.Ascending, "По возрастанию" }
             };
             DiscountFilterDictionary = new Dictionary<(int, int), string>() 
             {
@@ -46,11 +48,10 @@ namespace DemoEx.WPF.ViewModels
                 { (70, 100), "70% - 100%" }
             };
 
-            this.languageServicesRepository = languageServicesRepository;
+            this.languageServiceRepository = languageServiceRepository;
 
-            var languageServices = languageServicesRepository.Items.Include(item => item.ServiceRecords).ToList();
+            var languageServices = languageServiceRepository.Items.Include(item => item.ServiceRecords).ToList();
             languageServices.ForEach(item => item.ImagePath = item.ImagePath.Insert(0, "..\\..\\..\\Resources\\"));
-            languageServices.ForEach(item => item.DiscountCost = Convert.ToInt32(item.Discount > 0 ? item.Cost * (100 - item.Discount) / 100 : item.Cost));
             this.languageServices = languageServices;
 
             languageServiceSource = new CollectionViewSource()
@@ -70,7 +71,7 @@ namespace DemoEx.WPF.ViewModels
 
         #region Fields
 
-        private readonly IRepository<LanguageService> languageServicesRepository;
+        private readonly IRepository<LanguageService> languageServiceRepository;
 
         private readonly CollectionViewSource languageServiceSource;
         #endregion
@@ -180,16 +181,11 @@ namespace DemoEx.WPF.ViewModels
         public LambdaCommand CreateServiceCommand { get; set; }
         private void OnCreateServiceCommandExecute(object obj)
         {
-            var serviceToAdd = new LanguageService();
-
-            AddServiceWindow addServiceWindow = new AddServiceWindow()
+            CreateLanguageServiceDialog dialog = new CreateLanguageServiceDialog(languageServiceRepository);
+            if (dialog.ShowDialog() == true)
             {
-                Owner = App.Host.Services.GetRequiredService<MainWindow>(),
-                DataContext = new AddServiceViewModel(serviceToAdd)
-            };
-            if (addServiceWindow.ShowDialog() != null && addServiceWindow.ShowDialog() == true)
-            {
-                languageServicesRepository.AddAsync(serviceToAdd);
+                LanguageService serviceToAdd = (LanguageService)dialog.DialogResult;
+                languageServiceRepository.AddAsync(serviceToAdd);
             }
         }
 
@@ -204,15 +200,7 @@ namespace DemoEx.WPF.ViewModels
             LanguageService service = (LanguageService)obj;
             var serviceToUpdate = service ?? SelectedLanguageService;
 
-            AddServiceWindow addServiceWindow = new AddServiceWindow()
-            {
-                Owner = App.Host.Services.GetRequiredService<MainWindow>(),
-                DataContext = new AddServiceViewModel(serviceToUpdate)
-            };
-            if (addServiceWindow.ShowDialog() != null && addServiceWindow.ShowDialog() == true)
-            {
-                languageServicesRepository.UpdateAsync(serviceToUpdate);
-            }
+
         }
         private bool CanUpdateServiceCommandExecute(object obj) => obj != null || SelectedLanguageService != null;
 
@@ -228,7 +216,7 @@ namespace DemoEx.WPF.ViewModels
             var dialogResult = MessageBox.Show("Вы действительно хотите удалить данный элемент?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if(dialogResult == MessageBoxResult.Yes)
             {
-                languageServicesRepository.RemoveAsync(serviceToDelete.Id);
+                languageServiceRepository.RemoveAsync(serviceToDelete.Id);
             }
         }
         private bool CanRemoveServiceCommandExecute(object obj) => obj != null || SelectedLanguageService != null;

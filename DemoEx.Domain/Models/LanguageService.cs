@@ -21,7 +21,7 @@ namespace DemoEx.Domain.Models
         public int? Discount { get; set; }
 
         [NotMapped]
-        public int DiscountCost { get; set; }
+        public int DiscountCost => Convert.ToInt32(Discount > 0 ? Cost * (100 - Discount) / 100 : Cost);
 
         public virtual ICollection<ServiceRecord> ServiceRecords { get; set; }
     }

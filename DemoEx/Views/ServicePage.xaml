@@ -39,10 +39,9 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Image 
-                    Source="{Binding ImagePath, FallbackValue='Изображение не найдено'}"
-                    Width="250"
-                    Margin="5"/>
+                <Image Source="{Binding ImagePath, FallbackValue='Изображение не найдено'}"
+                       Width="250"
+                       Margin="5"/>
                 <Grid Margin="10 2"
                       Grid.Column="1">
                     <Grid.RowDefinitions>

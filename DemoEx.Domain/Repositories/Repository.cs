@@ -1,4 +1,5 @@
 ﻿using DemoEx.Domain.Models;
+using DemoEx.Domain.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
