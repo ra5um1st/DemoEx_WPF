@@ -34,7 +34,8 @@ namespace DemoEx.Domain.Repositories
         }
         public async Task RemoveAsync(int id)
         {
-            context.Set<T>().Remove(new T { Id = id });
+            var item = context.Set<T>().FirstOrDefaultAsync(item => item.Id == id).Result ?? new T { Id = id };
+            context.Set<T>().Remove(item);
             await context.SaveChangesAsync();
         }
         public async Task UpdateAsync(T item)

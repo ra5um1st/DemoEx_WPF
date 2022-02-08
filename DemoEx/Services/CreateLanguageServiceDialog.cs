@@ -24,26 +24,26 @@ namespace DemoEx.WPF.Services
         {
             this.languageServiceRepository = languageServiceRepository;
 
-            languageService = new LanguageService();
             childWindow = new AddServiceWindow()
             {
                 Owner = App.Current.MainWindow,
                 DataContext = this
             };
 
-            SubmitCommand = new LambdaCommand(OnAcceptCommandExecute, CanCreateCommandExecute);
+            SubmitCommand = new LambdaCommand(OnSubmitCommandExecute, CanSubmitCommandExecute);
             CancelCommand = new LambdaCommand(OnCancelCommandExecute);
             AddImageCommand = new LambdaCommand(OnAddImagesCommandExecute);
         }
 
         #region Fields
+
         private Window childWindow;
         private readonly IRepository<LanguageService> languageServiceRepository;
-        private LanguageService languageService;
+
         #endregion Fields
 
         #region Properties
-        public bool HasErrors => throw new NotImplementedException();
+        public bool HasErrors => false;
 
         public IEntity DialogResult => new LanguageService()
         {
@@ -60,7 +60,6 @@ namespace DemoEx.WPF.Services
             get => serviceName;
             set
             {
-                languageService.ServiceName = serviceName;
                 Set(ref serviceName, ref value);
             }
         }
@@ -70,7 +69,6 @@ namespace DemoEx.WPF.Services
             get => imagePath;
             set
             {
-                languageService.ImagePath = imagePath;
                 Set(ref imagePath, ref value);
             }
         }
@@ -80,7 +78,6 @@ namespace DemoEx.WPF.Services
             get => duration;
             set
             {
-                languageService.Duration = duration;
                 Set(ref duration, ref value);
             }
         }
@@ -91,7 +88,6 @@ namespace DemoEx.WPF.Services
             get => cost;
             set
             {
-                languageService.Cost = cost;
                 Set(ref cost, ref value);
             }
         }
@@ -102,7 +98,6 @@ namespace DemoEx.WPF.Services
             get => discount;
             set
             {
-                languageService.Discount = discount;
                 Set(ref discount, ref value);
             }
         }
@@ -110,16 +105,17 @@ namespace DemoEx.WPF.Services
 
         #region Commands
         public ICommand SubmitCommand { get; }
-        private bool CanCreateCommandExecute(object obj)
+        private bool CanSubmitCommandExecute(object obj)
         {
-            return languageService.ServiceName == null ? false : languageServiceRepository.Items
-                .ToList()
-                .Where(item => item.ServiceName.ToLower() == languageService.ServiceName.ToLower())
-                .ToList().Count == 0;
+            return true;
+            //return languageService.ServiceName == null ? false : languageServiceRepository.Items
+            //    .ToList()
+            //    .Where(item => item.ServiceName.ToLower() == languageService.ServiceName.ToLower())
+            //    .ToList().Count == 0;
         }
-        private void OnAcceptCommandExecute(object obj)
+        private void OnSubmitCommandExecute(object obj)
         {
-            if (!CanCreateCommandExecute(obj))
+            if (!CanSubmitCommandExecute(obj))
             {
                 return;
             }
@@ -149,11 +145,14 @@ namespace DemoEx.WPF.Services
                 Filter = "Изображения (*.PNG;*.JPEG;*.JPG)|*.PNG;*.JPEG;*.JPG",
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer)
             };
-            if (fileDialog.ShowDialog() != true)
+            if (fileDialog.ShowDialog() == true)
             {
-                return;
+                ImagePath = fileDialog.FileName;
             }
-            ImagePath = fileDialog.FileName;
+            else
+            {
+
+            }
         }
         #endregion Commands
 

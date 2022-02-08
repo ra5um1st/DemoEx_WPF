@@ -3,9 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DemoEx.WPF.Views"
+        xmlns:local="clr-namespace:DemoEx.WPF.Views" xmlns:converters="clr-namespace:DemoEx.WPF.Converters"
         mc:Ignorable="d"
         Title="Добавление сервиса" Height="600" Width="400">
+    <Window.Resources>
+        <converters:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -21,15 +24,29 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
+                <TextBlock Text="Изображения нет"
+                           Visibility="Collapsed">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ImagePath, Converter={StaticResource NullToBooleanConverter}}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
                 <Image Width="250"
                        Margin="10"
-                       Source="{Binding ImagePath}"/>
+                       Source="{Binding ImagePath}">
+                </Image>
                 <Button Grid.Row="1"
                         Margin="15"
                         Content="Добавить изображение"
                         Command="{Binding AddImageCommand}"/>
             </Grid>
             <TextBox Text="{Binding Duration, StringFormat='{}{HH:mm}', Mode=OneWayToSource}"/>
+            <!--Реализовать собственный текстбокс для ввода времени-->
             <TextBox Text="{Binding Cost, StringFormat='{}{0:D}', Mode=OneWayToSource}"/>
             <TextBox Text="{Binding Discount, StringFormat='{}{0:P}', Mode=OneWayToSource}"/>
         </StackPanel>
@@ -39,7 +56,7 @@
                     HorizontalAlignment="Center"
                     Margin="25">
             <Button Content="Добавить услугу"
-                    Command="{Binding AcceptCommand}"
+                    Command="{Binding SubmitCommand}"
                     Margin="10 0"/>
             <Button Content="Отмена"
                     Command="{Binding CancelCommand}"

@@ -51,7 +51,14 @@ namespace DemoEx.WPF.ViewModels
             this.languageServiceRepository = languageServiceRepository;
 
             var languageServices = languageServiceRepository.Items.Include(item => item.ServiceRecords).ToList();
-            languageServices.ForEach(item => item.ImagePath = item.ImagePath.Insert(0, "..\\..\\..\\Resources\\"));
+            languageServices.ForEach(item => 
+            {
+                if(item.ImagePath != null)
+                {
+                    item.ImagePath = item.ImagePath.Insert(0, "..\\..\\..\\Resources\\");
+                }
+            });
+
             this.languageServices = languageServices;
 
             languageServiceSource = new CollectionViewSource()
@@ -186,6 +193,9 @@ namespace DemoEx.WPF.ViewModels
             {
                 LanguageService serviceToAdd = (LanguageService)dialog.DialogResult;
                 languageServiceRepository.AddAsync(serviceToAdd);
+                ((List<LanguageService>)languageServices).Add(serviceToAdd);
+                OnPropertyChanged(nameof(TotalItemsCount));
+                languageServiceSource.View.Refresh();
             }
         }
 
@@ -199,8 +209,6 @@ namespace DemoEx.WPF.ViewModels
             
             LanguageService service = (LanguageService)obj;
             var serviceToUpdate = service ?? SelectedLanguageService;
-
-
         }
         private bool CanUpdateServiceCommandExecute(object obj) => obj != null || SelectedLanguageService != null;
 
@@ -217,6 +225,9 @@ namespace DemoEx.WPF.ViewModels
             if(dialogResult == MessageBoxResult.Yes)
             {
                 languageServiceRepository.RemoveAsync(serviceToDelete.Id);
+                ((List<LanguageService>)languageServices).Remove(serviceToDelete);
+                OnPropertyChanged(nameof(TotalItemsCount));
+                languageServiceSource.View.Refresh();
             }
         }
         private bool CanRemoveServiceCommandExecute(object obj) => obj != null || SelectedLanguageService != null;
