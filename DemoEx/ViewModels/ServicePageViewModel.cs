@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Data;
@@ -49,16 +50,7 @@ namespace DemoEx.WPF.ViewModels
             };
 
             this.languageServiceRepository = languageServiceRepository;
-
             var languageServices = languageServiceRepository.Items.Include(item => item.ServiceRecords).ToList();
-            languageServices.ForEach(item => 
-            {
-                if(item.ImagePath != null)
-                {
-                    item.ImagePath = item.ImagePath.Insert(0, "..\\..\\..\\Resources\\");
-                }
-            });
-
             this.languageServices = languageServices;
 
             languageServiceSource = new CollectionViewSource()

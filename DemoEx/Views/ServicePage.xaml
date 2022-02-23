@@ -42,7 +42,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock/>
-                <Image Source="{Binding ImagePath, FallbackValue='Изображение не найдено'}"
+                <Image Source="{Binding ImagePath, FallbackValue='Resources/no_icon.png', TargetNullValue='Resources/no_icon.png'}"
                        Width="250"
                        Margin="5"/>
                 <Grid Margin="10 2"
@@ -62,7 +62,8 @@
                     <StackPanel Orientation="Horizontal"
                                 Grid.Row="1">
                         <TextBlock Text="{Binding Cost, StringFormat='{}{0:F0} ', FallbackValue='-'}"
-                                   FontSize="16">
+                                   FontSize="16"
+                                   >
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Style.Triggers>
@@ -264,7 +265,7 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-
+        
         <StackPanel Orientation="Horizontal"
                     Grid.Row="2">
             <TextBlock Text="{Binding Items.Count, ElementName=ListBox, StringFormat='{}{0} из '}"/>

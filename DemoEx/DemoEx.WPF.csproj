@@ -4,35 +4,46 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Услуги школы\for company.jpg" />
-    <None Remove="Resources\Услуги школы\online lessons.jpg" />
-    <None Remove="Resources\Услуги школы\Английский язык.jpg" />
-    <None Remove="Resources\Услуги школы\Испанский язык.jpg" />
-    <None Remove="Resources\Услуги школы\Итальянский язык.jpg" />
-    <None Remove="Resources\Услуги школы\киноклуб.jpg" />
-    <None Remove="Resources\Услуги школы\Китайский язык.jpg" />
-    <None Remove="Resources\Услуги школы\Немецкий язык.png" />
-    <None Remove="Resources\Услуги школы\Подготовка к экзамену ACT.png" />
-    <None Remove="Resources\Услуги школы\Подготовка к экзамену GMAT.png" />
-    <None Remove="Resources\Услуги школы\Подготовка к экзамену GRE.jpeg" />
-    <None Remove="Resources\Услуги школы\Подготовка к экзамену IELTS.jpg" />
-    <None Remove="Resources\Услуги школы\Подготовка к экзамену SAT.png" />
-    <None Remove="Resources\Услуги школы\Подготовка к экзамену TOEFL.jpg" />
-    <None Remove="Resources\Услуги школы\Португальский язык.jpg" />
-    <None Remove="Resources\Услуги школы\Французский язык.jpg" />
-    <None Remove="Resources\Услуги школы\Японский язык.jpg" />
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+    <Page Remove="bin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Language Service Images\ACT.png" />
+    <None Remove="Resources\Language Service Images\Chinese language.jpg" />
+    <None Remove="Resources\Language Service Images\Cinema.jpg" />
+    <None Remove="Resources\Language Service Images\English language.jpg" />
+    <None Remove="Resources\Language Service Images\for company.jpg" />
+    <None Remove="Resources\Language Service Images\French language.jpg" />
+    <None Remove="Resources\Language Service Images\German language.png" />
+    <None Remove="Resources\Language Service Images\GMAT.png" />
+    <None Remove="Resources\Language Service Images\GRE.jpeg" />
+    <None Remove="Resources\Language Service Images\IELTS.jpg" />
+    <None Remove="Resources\Language Service Images\Italian language.jpg" />
+    <None Remove="Resources\Language Service Images\Japanese language.jpg" />
+    <None Remove="Resources\Language Service Images\online lessons.jpg" />
+    <None Remove="Resources\Language Service Images\Portuguese language.jpg" />
+    <None Remove="Resources\Language Service Images\SAT.png" />
+    <None Remove="Resources\Language Service Images\Spain language.jpg" />
+    <None Remove="Resources\Language Service Images\TOEFL.jpg" />
+    <None Remove="Resources\no_icon.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FontAwesome5" Version="2.1.6" />
+    <PackageReference Include="ICSharpCode.Decompiler" Version="7.1.0.6543" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,56 +51,56 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Услуги школы\for company.jpg">
+    <Content Include="Resources\Language Service Images\ACT.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\online lessons.jpg">
+    </Content>
+    <Content Include="Resources\Language Service Images\Chinese language.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Английский язык.jpg">
+    </Content>
+    <Content Include="Resources\Language Service Images\Cinema.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Испанский язык.jpg">
+    </Content>
+    <Content Include="Resources\Language Service Images\English language.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Итальянский язык.jpg">
+    </Content>
+    <Content Include="Resources\Language Service Images\for company.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\киноклуб.jpg">
+    </Content>
+    <Content Include="Resources\Language Service Images\French language.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Китайский язык.jpg">
+    </Content>
+    <Content Include="Resources\Language Service Images\German language.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Немецкий язык.png">
+    </Content>
+    <Content Include="Resources\Language Service Images\GMAT.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Подготовка к экзамену ACT.png">
+    </Content>
+    <Content Include="Resources\Language Service Images\GRE.jpeg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Подготовка к экзамену GMAT.png">
+    </Content>
+    <Content Include="Resources\Language Service Images\IELTS.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Подготовка к экзамену GRE.jpeg">
+    </Content>
+    <Content Include="Resources\Language Service Images\Italian language.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Подготовка к экзамену IELTS.jpg">
+    </Content>
+    <Content Include="Resources\Language Service Images\Japanese language.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Подготовка к экзамену SAT.png">
+    </Content>
+    <Content Include="Resources\Language Service Images\online lessons.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Подготовка к экзамену TOEFL.jpg">
+    </Content>
+    <Content Include="Resources\Language Service Images\SAT.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Португальский язык.jpg">
+    </Content>
+    <Content Include="Resources\Language Service Images\Spain language.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Французский язык.jpg">
+    </Content>
+    <Content Include="Resources\Language Service Images\TOEFL.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Услуги школы\Японский язык.jpg">
+    </Content>
+    <Content Include="Resources\no_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
 </Project>

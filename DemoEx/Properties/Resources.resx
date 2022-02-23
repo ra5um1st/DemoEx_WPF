@@ -118,55 +118,55 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ACT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\ACT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Chinese language" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\Chinese language.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Cinema" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\Cinema.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="English language" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\English language.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="for company" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\for company.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\Language Service Images\for company.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="French language" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\French language.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="German language" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\German language.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GMAT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\GMAT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GRE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\GRE.jpeg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="IELTS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\IELTS.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Italian language" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\Italian language.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Japanese language" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\Japanese language.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="online lessons" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\online lessons.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\Resources\Language Service Images\online lessons.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Английский язык" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Английский язык.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Portuguese language" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\Portuguese language.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Испанский язык" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Испанский язык.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="SAT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\SAT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Итальянский язык" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Итальянский язык.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Spain language" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\Spain language.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="киноклуб" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\киноклуб.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Китайский язык" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Китайский язык.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Немецкий язык" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Немецкий язык.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Подготовка к экзамену ACT" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Подготовка к экзамену ACT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Подготовка к экзамену GMAT" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Подготовка к экзамену GMAT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Подготовка к экзамену GRE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Подготовка к экзамену GRE.jpeg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Подготовка к экзамену IELTS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Подготовка к экзамену IELTS.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Подготовка к экзамену SAT" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Подготовка к экзамену SAT.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Подготовка к экзамену TOEFL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Подготовка к экзамену TOEFL.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Португальский язык" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Португальский язык.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Французский язык" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Французский язык.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Японский язык" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Услуги школы\Японский язык.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="TOEFL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Language Service Images\TOEFL.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
