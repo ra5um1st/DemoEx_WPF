@@ -3,11 +3,86 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DemoEx.WPF.Views"
+             xmlns:local="clr-namespace:DemoEx.WPF.Views" 
+             xmlns:converters="clr-namespace:DemoEx.WPF.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:RemainingTimeToBooleanConverter x:Key="RemainingTimeToBooleanConverter"/>
+    </UserControl.Resources>
     <Grid Background="White">
-        <DataGrid ItemsSource="{Binding ServiceRecordsView}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Button Content="Добавить запись"
+                    Command="{Binding AddServiceRecordCommand}"/>
+        </StackPanel>
+        <DataGrid ItemsSource="{Binding ServiceRecordsView}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Grid.Row="1">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RemainingTime, StringFormat='t', Converter={StaticResource RemainingTimeToBooleanConverter}}" Value="True">
+                            <Setter Property="Background" Value="LightPink"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Наименование услуги">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Service.ServiceName, StringFormat='{}{0}'}"
+                                           MaxWidth="300"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="ФИО">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Person.Name, StringFormat='{}{0} '}"/>
+                                <TextBlock Text="{Binding Person.Surname, StringFormat='{}{0} '}"/>
+                                <TextBlock Text="{Binding Person.Patronymic, StringFormat='{}{0}'}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="E-Mail">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Person.Email, StringFormat='{}{0}'}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Дата начала">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding StartDate, StringFormat='HH:mm dd.MM.yyyy'}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="До начала">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding RemainingTime, StringFormat='{}{0:dd\\:hh\\:mm\\:ss}'}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
         </DataGrid>
     </Grid>
 </UserControl>

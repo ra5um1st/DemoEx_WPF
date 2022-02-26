@@ -1,0 +1,116 @@
+﻿<Window x:Class="DemoEx.WPF.Views.AddServiceRecord"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DemoEx.WPF.Views"
+        mc:Ignorable="d"
+        Title="AddServiceRecord" Height="600" Width="400">
+    <Border Style="{StaticResource BorderStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <Grid>
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox ItemsSource="{Binding Persons}"
+                                      Style="{StaticResource ComboBoxStyle}"
+                                      SelectedItem="{Binding SelectedPerson, Mode=OneWayToSource}"
+                                      IsTextSearchEnabled="True">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name, StringFormat='{}{0}'}"/>
+                                            <TextBlock Text="{Binding Surname, StringFormat=' {0}'}"/>
+                                            <TextBlock Text="{Binding Patronymic, StringFormat=' {0}'}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock Text="Клиент"
+                                       Style="{StaticResource TextBlockStyle}"
+                                       Grid.Column="1"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox ItemsSource="{Binding LanguageServices}"
+                                      SelectedItem="{Binding SelectedLanguageService, Mode=OneWayToSource}"
+                                      Style="{StaticResource ComboBoxStyle}"
+                                      IsTextSearchEnabled="True">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel>
+                                                <TextBlock Text="Наименование: "/>
+                                                <TextBlock Text="Длительность: "/>
+                                                <TextBlock Text="Стоимость: "/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1"
+                                                    Margin="15 0 0 0">
+                                                <TextBlock Text="{Binding ServiceName}"/>
+                                                <TextBlock Text="{Binding Duration, StringFormat='{}{0} минут'}"/>
+                                                <TextBlock Text="{Binding Cost, StringFormat='{}{0} рублей'}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock Text="Услуга"
+                                       Style="{StaticResource TextBlockStyle}"
+                                       Grid.Column="1"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+                            <DatePicker SelectedDate="{Binding SelectedStartDate}"
+                                        Style="{StaticResource DatePickerStyle}"/>
+                            <TextBlock Text="Дата начала"
+                                       Style="{StaticResource TextBlockStyle}"
+                                       Grid.Column="1"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+                            <DatePickerTextBox Text="{Binding StartDateTime, StringFormat='{}{0:HH:mm}'}"
+                                               Style="{StaticResource DatePickerTextBoxStyle}"/>
+                            <TextBlock Text="Дата начала"
+                                       Style="{StaticResource TextBlockStyle}"
+                                       Grid.Column="1"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+            <Border Grid.Row="1"
+                    Style="{StaticResource BorderStyle}">
+                <Grid>
+                    <Button Content="Добавить"
+                        Command="{Binding SubmitCommand}"
+                        Style="{StaticResource ButtonStyle}"
+                        HorizontalAlignment="Left"/>
+                    <Button Content="Отмена"
+                        Command="{Binding CancelCommand}"
+                        Style="{StaticResource ButtonStyle}"
+                        HorizontalAlignment="Right"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

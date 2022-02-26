@@ -11,7 +11,5 @@ namespace DemoEx.WPF.Services
     {
         public bool? ShowDialog();
         public IEntity DialogResult { get; }
-        public ICommand SubmitCommand { get; }
-        public ICommand CancelCommand { get; }
     }
 }

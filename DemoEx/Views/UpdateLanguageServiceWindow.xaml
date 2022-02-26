@@ -132,7 +132,7 @@
 
         <Border Grid.Row="1"
                 Style="{StaticResource BorderStyle}">
-            <DockPanel>
+            <Grid>
                 <Button Content="Обновить услугу"
                         Command="{Binding SubmitCommand}"
                         Style="{StaticResource ButtonStyle}"
@@ -141,7 +141,7 @@
                         Command="{Binding CancelCommand}"
                         Style="{StaticResource ButtonStyle}"
                         HorizontalAlignment="Right"/>
-            </DockPanel>
+            </Grid>
         </Border>
     </Grid>
 </Window>
