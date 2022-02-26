@@ -11,6 +11,7 @@ namespace DemoEx.Domain.Models
         public LanguageService()
         {
             ServiceRecords = new HashSet<ServiceRecord>();
+            LanguageServiceImages = new HashSet<LanguageServiceImages>();
         }
 
         public int Id { get; set; }
@@ -24,5 +25,6 @@ namespace DemoEx.Domain.Models
         public int DiscountCost => Convert.ToInt32(Discount > 0 ? Cost * (100 - Discount) / 100 : Cost);
 
         public virtual ICollection<ServiceRecord> ServiceRecords { get; set; }
+        public virtual ICollection<LanguageServiceImages> LanguageServiceImages { get; set; }
     }
 }

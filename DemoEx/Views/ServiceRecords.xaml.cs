@@ -8,16 +8,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DemoEx.WPF.Views
 {
     /// <summary>
-    /// Логика взаимодействия для UserDataUpdateWindow.xaml
+    /// Логика взаимодействия для ServiceRecords.xaml
     /// </summary>
-    public partial class CreateLanguageServiceWindow : Window
+    public partial class ServiceRecords : UserControl
     {
-        public CreateLanguageServiceWindow()
+        public ServiceRecords()
         {
             InitializeComponent();
         }

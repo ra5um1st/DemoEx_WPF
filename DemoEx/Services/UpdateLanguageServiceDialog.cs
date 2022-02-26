@@ -19,17 +19,25 @@ using System.Windows.Input;
 
 namespace DemoEx.WPF.Services
 {
-    class CreateLanguageServiceDialog : ViewModel, IDialogService, INotifyDataErrorInfo
+    class UpdateLanguageServiceDialog : ViewModel, IDialogService, INotifyDataErrorInfo
     {
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-        public CreateLanguageServiceDialog(IRepository<LanguageService> languageServiceRepository)
+        public UpdateLanguageServiceDialog(LanguageService service, IRepository<LanguageService> languageServiceRepository)
         {
             this.languageServiceRepository = languageServiceRepository;
-            errorsDictionary = new Dictionary<string, List<string>>();
+            this.service = service;
 
-            childWindow = new CreateLanguageServiceWindow()
+            id = service.Id;
+            serviceName = service.ServiceName;
+            Duration = (int)service.Duration;
+            cost = (decimal)service.Cost;
+            discount = (int)service.Discount;
+            imagePath = service.ImagePath;
+
+            errorsDictionary = new Dictionary<string, List<string>>();
+            childWindow = new UpdateLanguageServiceWindow()
             {
                 Owner = App.Current.MainWindow,
                 DataContext = this
@@ -45,23 +53,31 @@ namespace DemoEx.WPF.Services
         private Window childWindow;
         private readonly IRepository<LanguageService> languageServiceRepository;
         private Dictionary<string, List<string>> errorsDictionary;
+        private LanguageService service;
 
         #endregion Fields
 
         #region Properties
         public bool HasErrors => errorsDictionary.Any();
 
-        public IEntity DialogResult => new LanguageService()
+        public IEntity DialogResult
         {
-            ServiceName = serviceName,
-            ImagePath = imagePath,
-            Duration = this.Duration,
-            Cost = cost,
-            Discount = discount
-        };
+            get
+            {
+                service.ServiceName = serviceName;
+                service.Duration = Duration;
+                service.Cost = cost;
+                service.Discount = discount;
+                service.ImagePath = imagePath;
+                return service;
+            }
+        }
+
+        private int id;
+        public int Id => id;
 
         private string serviceName;
-        public string ServiceName 
+        public string ServiceName
         {
             get => serviceName;
             set
@@ -69,6 +85,7 @@ namespace DemoEx.WPF.Services
                 Set(ref serviceName, ref value);
             }
         }
+
         private string imagePath;
         public string ImagePath
         {
@@ -108,12 +125,12 @@ namespace DemoEx.WPF.Services
             get => durationMinutes;
             set
             {
-                if(value < 0)
+                if (value < 0)
                 {
                     durationMinutes = 0;
                     AddError(nameof(DurationHours), "Время не может быть отрицательным");
                 }
-                else if(value > 59)
+                else if (value > 59)
                 {
                     durationMinutes = 59;
                     AddError(nameof(DurationHours), "Минут не более 59");
@@ -127,7 +144,12 @@ namespace DemoEx.WPF.Services
 
         public int Duration
         {
-            get => durationHours * 60 + durationMinutes;
+            get => (durationHours * 60) + durationMinutes;
+            set
+            {
+                durationHours = value / 60;
+                durationMinutes = value % 60;
+            }
         }
 
         private decimal cost = 0;
@@ -185,14 +207,6 @@ namespace DemoEx.WPF.Services
         }
         private void OnSubmitCommandExecute(object obj)
         {
-            if (languageServiceRepository.Items
-               .ToList()
-               .Where(item => item.ServiceName.Trim().ToLower() == ServiceName.Trim().ToLower())
-               .ToList().Count != 0)
-            {
-                MessageBox.Show("Запись с таким названием уже существует");
-                return;
-            }
             if (ImagePath != null)
             {
                 string imageName = Path.GetFileName(ImagePath);
@@ -233,7 +247,7 @@ namespace DemoEx.WPF.Services
             if (fileDialog.ShowDialog() == true)
             {
                 string fileName = Path.GetFileName(fileDialog.FileName);
-                if(Regex.IsMatch(fileName, "[а-яА-Я]"))
+                if (Regex.IsMatch(fileName, "[а-яА-Я]"))
                 {
                     MessageBox.Show("Имя выбранного файла не должно содержать русских символов. Приложение их не поддерживает. Измените их на английские.", "Неверное имя файла", MessageBoxButton.OK, MessageBoxImage.Error);
                 }

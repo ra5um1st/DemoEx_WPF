@@ -24,7 +24,7 @@ namespace DemoEx.Domain.Repositories
         }
         public async Task<T> AddAsync(T item)
         {
-            if(item == null)
+            if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }

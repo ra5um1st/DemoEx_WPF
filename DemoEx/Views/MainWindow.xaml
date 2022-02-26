@@ -22,12 +22,12 @@
                     <views:ServicePage/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type viewmodels:ServiceRecordsViewModel}">
-                    <views:ServicePage/>
+                    <views:ServiceRecords/>
                 </DataTemplate>
             </TabControl.Resources>
-            
-            <TabItem Header="Список услуг" Content="{Binding CurrentViewModel}"/>
-            <TabItem Header="Ближайшие записи" Content="{Binding CurrentViewModel}"/>
+
+            <TabItem Header="Список услуг" Content="{Binding Services}"/>
+            <TabItem Header="Ближайшие записи" Content="{Binding ServiceRecords}"/>
         </TabControl>
     </Grid>
 </Window>

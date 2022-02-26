@@ -15,9 +15,9 @@ namespace DemoEx.WPF.Views
     /// <summary>
     /// Логика взаимодействия для UpdateServiceWindow.xaml
     /// </summary>
-    public partial class UpdateServiceWindow : Window
+    public partial class UpdateLanguageServiceWindow : Window
     {
-        public UpdateServiceWindow()
+        public UpdateLanguageServiceWindow()
         {
             InitializeComponent();
         }

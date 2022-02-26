@@ -50,8 +50,7 @@ namespace DemoEx.WPF.ViewModels
             };
 
             this.languageServiceRepository = languageServiceRepository;
-            var languageServices = languageServiceRepository.Items.Include(item => item.ServiceRecords).ToList();
-            this.languageServices = languageServices;
+            this.languageServices = languageServiceRepository.Items.Include(item => item.ServiceRecords).ToList(); ;
 
             languageServiceSource = new CollectionViewSource()
             {
@@ -71,8 +70,8 @@ namespace DemoEx.WPF.ViewModels
         #region Fields
 
         private readonly IRepository<LanguageService> languageServiceRepository;
-
         private readonly CollectionViewSource languageServiceSource;
+
         #endregion
 
         #region Functions
@@ -192,25 +191,25 @@ namespace DemoEx.WPF.ViewModels
         }
 
         public LambdaCommand UpdateServiceCommand { get; set; }
-        private void OnUpdateServiceCommandExecute(object obj)
+        private async void OnUpdateServiceCommandExecute(object obj)
         {
-            if (!CanUpdateServiceCommandExecute(obj))
-            {
-                return;
-            }
-            
             LanguageService service = (LanguageService)obj;
             var serviceToUpdate = service ?? SelectedLanguageService;
+            serviceToUpdate = await languageServiceRepository.GetAsync(serviceToUpdate.Id);
+
+            UpdateLanguageServiceDialog dialog = new UpdateLanguageServiceDialog(serviceToUpdate, languageServiceRepository);
+            if (dialog.ShowDialog() == true)
+            {
+                serviceToUpdate = (LanguageService)dialog.DialogResult;
+                await languageServiceRepository.UpdateAsync(serviceToUpdate);
+                languageServiceSource.View.Refresh();
+            }
         }
         private bool CanUpdateServiceCommandExecute(object obj) => obj != null || SelectedLanguageService != null;
 
         public LambdaCommand RemoveServiceCommand { get; set; }
         private void OnRemoveServiceCommandExecute(object obj)
         {
-            if (!CanRemoveServiceCommandExecute(obj))
-            {
-                return;
-            }
             LanguageService service = (LanguageService)obj;
             var serviceToDelete = service ?? SelectedLanguageService;
             var dialogResult = MessageBox.Show("Вы действительно хотите удалить данный элемент?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Warning);

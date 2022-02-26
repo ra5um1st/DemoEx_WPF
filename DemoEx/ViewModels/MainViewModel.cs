@@ -12,7 +12,7 @@ namespace DemoEx.WPF.ViewModels
     {
         public MainViewModel()
         {
-            currentViewModel = App.Host.Services.GetRequiredService<ServicePageViewModel>();
+
         }
 
         #region Commands
@@ -26,12 +26,9 @@ namespace DemoEx.WPF.ViewModels
             set => Set(ref title, ref value);
         }
 
-        private ViewModel currentViewModel;
-        public ViewModel CurrentViewModel
-        {
-            get => currentViewModel;
-            set => Set(ref currentViewModel, ref value);
-        }
+        public ViewModel Services => App.Host.Services.GetRequiredService<ServicePageViewModel>();
+        public ViewModel ServiceRecords => App.Host.Services.GetRequiredService<ServiceRecordsViewModel>();
+
         #endregion
     }
 }

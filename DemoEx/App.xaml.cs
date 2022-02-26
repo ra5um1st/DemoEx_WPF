@@ -31,8 +31,7 @@ namespace DemoEx
 
                 services.AddTransient<MainViewModel>();
                 services.AddTransient<ServicePageViewModel>();
-                services.AddTransient<AddServiceViewModel>();
-                services.AddTransient<UpdateServiceViewModel>();
+                services.AddTransient<ServiceRecordsViewModel>();
 
                 services.AddTransient<IRepository<LanguageService>, Repository<LanguageService>>();
                 services.AddTransient<IRepository<Gender>, Repository<Gender>>();
