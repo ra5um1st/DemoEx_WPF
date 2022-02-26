@@ -101,7 +101,7 @@ namespace DemoEx.WPF.Services
             }
         }
 
-        public override IEntity DialogResult => new ServiceRecord
+        public override object DialogResult => new ServiceRecord
         {
             Service = selectedLanguageService,
             Person = selectedPerson,

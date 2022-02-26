@@ -1,0 +1,34 @@
+﻿<Window x:Class="DemoEx.WPF.Views.AdministratorMode"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DemoEx.WPF.Views"
+        mc:Ignorable="d"
+        Title="Активация режима администратора" Height="250" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Введте код администратора"
+                       Style="{StaticResource TextBlockStyle}"
+                       HorizontalAlignment="Center"/>
+            <PasswordBox Style="{StaticResource PasswordBoxStyle}"
+                         HorizontalContentAlignment="Center"
+                         x:Name="PasswordBox"/>
+        </StackPanel>
+        <DockPanel Grid.Row="1">
+            <Button Content="Ок"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource ButtonStyle}"
+                    Command="{Binding SubmitCommand}"
+                    CommandParameter="{Binding ElementName=PasswordBox}"/>
+            <Button Content="Отмена"
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource ButtonStyle}"
+                    Command="{Binding CancelCommand}"/>
+        </DockPanel>
+    </Grid>
+</Window>

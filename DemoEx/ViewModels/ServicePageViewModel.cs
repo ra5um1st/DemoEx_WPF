@@ -22,8 +22,12 @@ namespace DemoEx.WPF.ViewModels
 {
     class ServicePageViewModel : ViewModel
     {
-        public ServicePageViewModel(IRepository<LanguageService> languageServiceRepository)
+        public ServicePageViewModel(IRepository<LanguageService> languageServiceRepository, RoleService roleService)
         {
+            RoleService = roleService;
+            this.languageServiceRepository = languageServiceRepository;
+            this.languageServices = languageServiceRepository.Items.Include(item => item.ServiceRecords).ToList(); ;
+
             searchFilter = "";
             currentSortingProperty = nameof(LanguageService.Id);
             SortingPropertiesDictionary = new Dictionary<string, string>()
@@ -49,9 +53,6 @@ namespace DemoEx.WPF.ViewModels
                 { (70, 100), "70% - 100%" }
             };
 
-            this.languageServiceRepository = languageServiceRepository;
-            this.languageServices = languageServiceRepository.Items.Include(item => item.ServiceRecords).ToList(); ;
-
             languageServiceSource = new CollectionViewSource()
             {
                 Source = this.languageServices,
@@ -74,37 +75,9 @@ namespace DemoEx.WPF.ViewModels
 
         #endregion
 
-        #region Functions
-        private void OnLanguageServiceNameFilter(object sender, FilterEventArgs e)
-        {
-            if (e.Item == null || e.Item.GetType() != typeof(LanguageService))
-            {
-                return;
-            }
-
-            LanguageService service = (LanguageService)e.Item;
-            if (!service.ServiceName.Contains(SearchFilter, StringComparison.CurrentCultureIgnoreCase))
-            {
-                e.Accepted = false;
-            }
-        }
-
-        private void OnLanguageServiceDiscountFilter(object sender, FilterEventArgs e)
-        {
-            if (e.Item == null || e.Item.GetType() != typeof(LanguageService))
-            {
-                return;
-            }
-
-            LanguageService service = (LanguageService)e.Item;
-            if (service.Discount < currentDiscountFilter.Item1 || service.Discount > currentDiscountFilter.Item2)
-            {
-                e.Accepted = false;
-            }
-        }
-        #endregion
-
         #region Properties
+
+        public RoleService RoleService { get; }
 
         private LanguageService selectedLanguageService;
         public LanguageService SelectedLanguageService
@@ -223,5 +196,36 @@ namespace DemoEx.WPF.ViewModels
         }
         private bool CanRemoveServiceCommandExecute(object obj) => obj != null || SelectedLanguageService != null;
         #endregion
+
+        #region Functions
+        private void OnLanguageServiceNameFilter(object sender, FilterEventArgs e)
+        {
+            if (e.Item == null || e.Item.GetType() != typeof(LanguageService))
+            {
+                return;
+            }
+
+            LanguageService service = (LanguageService)e.Item;
+            if (!service.ServiceName.Contains(SearchFilter, StringComparison.CurrentCultureIgnoreCase))
+            {
+                e.Accepted = false;
+            }
+        }
+
+        private void OnLanguageServiceDiscountFilter(object sender, FilterEventArgs e)
+        {
+            if (e.Item == null || e.Item.GetType() != typeof(LanguageService))
+            {
+                return;
+            }
+
+            LanguageService service = (LanguageService)e.Item;
+            if (service.Discount < currentDiscountFilter.Item1 || service.Discount > currentDiscountFilter.Item2)
+            {
+                e.Accepted = false;
+            }
+        }
+        #endregion
+
     }
 }

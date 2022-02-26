@@ -16,7 +16,7 @@ namespace DemoEx.WPF.Services
             this.dialog.Window.DataContext = dialog;
             this.dialog.Window.Owner = owner;
         }
-        public IEntity DialogResult => dialog.DialogResult;
+        public object DialogResult => dialog.DialogResult;
         public bool? ShowDialog() => dialog.Window.ShowDialog();
 
         private T dialog;

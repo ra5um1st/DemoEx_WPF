@@ -60,7 +60,7 @@ namespace DemoEx.WPF.Services
         #region Properties
         public bool HasErrors => errorsDictionary.Any();
 
-        public IEntity DialogResult
+        public object DialogResult
         {
             get
             {

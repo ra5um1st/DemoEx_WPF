@@ -10,6 +10,6 @@ namespace DemoEx.WPF.Services
     public interface IDialogService
     {
         public bool? ShowDialog();
-        public IEntity DialogResult { get; }
+        public object DialogResult { get; }
     }
 }

@@ -13,6 +13,6 @@ namespace DemoEx.WPF.ViewModels.Base
         public abstract Window Window { get; }
         public abstract ICommand SubmitCommand { get; }
         public abstract ICommand CancelCommand { get; }
-        public abstract IEntity DialogResult { get; }
+        public abstract object DialogResult { get; }
     }
 }

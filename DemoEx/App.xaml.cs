@@ -1,6 +1,7 @@
 ﻿using DemoEx.Domain.Models;
 using DemoEx.Domain.Repositories;
 using DemoEx.Domain.Repositories.Base;
+using DemoEx.WPF.Services;
 using DemoEx.WPF.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,6 +28,7 @@ namespace DemoEx
             {
                 services.AddDbContext<LanguageCoursesDbContext>();
 
+                services.AddSingleton<RoleService>();
                 services.AddSingleton<MainWindow>();
 
                 services.AddTransient<MainViewModel>();

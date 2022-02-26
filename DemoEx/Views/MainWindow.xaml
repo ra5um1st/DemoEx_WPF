@@ -12,23 +12,42 @@
         Title="{Binding Title}"
         Icon="/Resources/school_logo.png">
     <Grid>
-        <TabControl>
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <ContentControl Content="{Binding CurrentViewModel}"/>
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-            <TabControl.Resources>
-                <DataTemplate DataType="{x:Type viewmodels:ServicePageViewModel}">
-                    <views:ServicePage/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewmodels:ServiceRecordsViewModel}">
-                    <views:ServiceRecords/>
-                </DataTemplate>
-            </TabControl.Resources>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Настройки">
+                    <MenuItem Header="Режим администратора"
+                              IsChecked="{Binding RoleService.AdministratorMode}"
+                              Command="{Binding ActivateAdministratorModeCommand}"/>
+                </MenuItem>
+            </Menu>
+            <TabControl>
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <ContentControl Content="{Binding CurrentViewModel}"/>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.Resources>
+                    <DataTemplate DataType="{x:Type viewmodels:ServicePageViewModel}">
+                        <views:ServicePage/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:ServiceRecordsViewModel}">
+                        <views:ServiceRecords/>
+                    </DataTemplate>
+                </TabControl.Resources>
 
-            <TabItem Header="Список услуг" Content="{Binding Services}"/>
-            <TabItem Header="Ближайшие записи" Content="{Binding ServiceRecords}"/>
-        </TabControl>
+                <TabItem Header="Список услуг" Content="{Binding Services}"/>
+                <TabItem Header="Ближайшие записи" Content="{Binding ServiceRecords}">
+                    <TabItem.Style>
+                        <Style TargetType="TabItem">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RoleService.AdministratorMode}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TabItem.Style>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
     </Grid>
 </Window>

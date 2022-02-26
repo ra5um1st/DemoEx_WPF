@@ -51,7 +51,7 @@ namespace DemoEx.WPF.Services
         #region Properties
         public bool HasErrors => errorsDictionary.Any();
 
-        public IEntity DialogResult => new LanguageService()
+        public object DialogResult => new LanguageService()
         {
             ServiceName = serviceName,
             ImagePath = imagePath,

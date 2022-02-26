@@ -24,7 +24,7 @@ namespace DemoEx.WPF.ViewModels
             this.serviceRecordsRepository = serviceRecordsRepository;
             this.languageServicesRepository = languageServicesRepository;
             this.personsRepository = personsRepository;
-            
+
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 30);
             timer.Start();
@@ -53,6 +53,7 @@ namespace DemoEx.WPF.ViewModels
 
         #region Properties
 
+        RoleService RoleService { get; }
         public ICollectionView ServiceRecordsView => serviceRecordsViewSource.View;
 
         #endregion
@@ -88,6 +89,7 @@ namespace DemoEx.WPF.ViewModels
         #endregion
 
         #region Methods
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             ServiceRecordsView.Refresh();
